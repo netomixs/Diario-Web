@@ -1,0 +1,66 @@
+.wrapper{
+
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    /*background-color: #A5EEA0;
+*/
+}
+.bodyItem{
+  background-color: #A5EEA0;
+  height: 200%;
+}
+.logo{
+    height: auto;
+    margin-bottom: 10px;
+}
+body{
+   
+    height: 100%;
+    width: 100%;
+    /*max-width: 330px;*/
+  
+    text-align: center;
+    background-color: #A5EEA0;
+    
+}
+.card{
+    background-color: aqua;
+    width: 100%;
+    max-width: 500px;
+    margin: auto;
+    padding: 30px;
+    text-align: center;
+}
+
+.bd-placeholder-img {
+    font-size: 1.125rem;
+    text-anchor: middle;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    user-select: none;
+  }
+
+
+
+
+  .form-signin {
+    max-width: 330px;
+    padding: 15px;
+    margin-bottom: 100px;
+  padding-bottom: 100%;
+  }
+
+  
+  .form-signin input[type="email"] {
+    margin-bottom: -1px;
+    border-bottom-right-radius: 0;
+    border-bottom-left-radius: 0;
+  }
+  
+  .form-signin input[type="password"] {
+    margin-bottom: 10px;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+  }
+  

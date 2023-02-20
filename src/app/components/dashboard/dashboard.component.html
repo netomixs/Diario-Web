@@ -1,0 +1,158 @@
+<!--Cabezera-->
+<header class="navbar navbar-dark sticky-top  flex-md-nowrap p-0 shadow" style="background-color: #A5EEA0 ;">
+   
+    <button type="button" class="btn btn-light" (click)="refrescarDatos()">Actualizar</button>
+
+    <div class="navbar-nav">
+      <div class="nav-item text-nowrap">
+        <a class="nav-link px-3"(click)="CerrarSesion()" href="#" style="color: #000;">Cerrar sesión</a>
+      </div>
+    </div>
+  </header>
+  <!--Fin cabezera-->
+  <div class="container-fluid">
+    <div class="row">
+      
+      <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
+        
+        <div class="position-sticky pt-3 sidebar-sticky">
+          <ul class="list-group">
+               <!--Lista de Experimentos -->
+            <li class="" *ngFor="let experimento of ListaExperimentos">
+              <button class="list-group-item list-group-item-action"   aria-current="page"(click)="mostraHoja(experimento?.id)"[id]="experimento.id" >
+                <span data-feather="home" class="align-text-bottom">
+                   {{experimento.nombre}}
+                </span>
+              </button>
+              <!--Lista de Hojas de egistro -->
+              <div class="collapse " id="{{experimento.id+'collapse'}}">
+                <div class="card d-flex justify-content-center ">
+                  <div class="pl-1">
+                  <ul class=" list-group " *ngIf="experimento.id==experimentoSeleccionado">
+                    <li class="ml-1" *ngFor="let hoja of ListaHoja"  >
+                      <button  class="list-group-item list-group-item-action" aria-current="page" (click)="mostraRepeticiones(hoja.id)" [id]="hoja.id" >Mes de Crecimiento: {{hoja?.mesCrecimiento}} </button>
+                      <!--   <div class="collapse " id="{{hoja.id+'collapse'}}">
+                   <div class="card d-flex justify-content-center ">
+                          <div class="pl-1">
+                          <ul class=" list-group " *ngIf="experimento.id==experimentoSeleccionado">
+                            <li class="ml-1">
+                              <button  class="list-group-item list-group-item-action" aria-current="page" id="R1">Repeticion 1</button>
+                            </li>
+                            <li class="ml-1"  >
+                              <button  class="list-group-item list-group-item-action" aria-current="page" id="R2">Repeticion 2</button>
+                            </li>
+                            <li class="ml-1"  >
+                              <button  class="list-group-item list-group-item-action" aria-current="page" id="R3">Repeticion 3</button>
+                            </li>
+                            <li class="ml-1"  >
+                              <button  class="list-group-item list-group-item-action" aria-current="page" id="R4">Repeticion 4</button>
+                            </li>
+                          </ul>
+                        </div>
+                        </div>
+                      </div>
+                      -->  
+                    </li>
+                  </ul>
+                </div>
+                </div>
+              </div>
+            </li>
+    
+
+          </ul>
+        </div>
+      </nav>
+  
+      <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+        <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+          <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
+            <div class="btn-group mr-2" role="group" aria-label="First group">
+            <button type="button" class="btn btn-primary" id="altura" (click)="asicnarTipo('altura')">Altura</button>
+            <button type="button" class="btn btn-primary"id="numero"(click)="asicnarTipo('numero')">Numero</button>
+          </div>
+          </div>
+          <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
+            <div class="btn-group mr-2" role="group" aria-label="First group">
+              <button type="button" class="btn btn-secondary" (click)="asignarRepeticion('R1')" id="R1">1</button>
+              <button type="button" class="btn btn-secondary"(click)="asignarRepeticion('R2')"id="R2">2</button>
+              <button type="button" class="btn btn-secondary"(click)="asignarRepeticion('R3')"id="R3">3</button>
+              <button type="button" class="btn btn-secondary"(click)="asignarRepeticion('R4')"id="R4">4</button>
+            </div>
+
+
+          </div>
+          <div class="btn-toolbar mb-2 mb-md-0">
+            <div class="btn-group me-2">
+              <button type="button" class="btn btn-sm btn-outline-secondary" (click)="downloadPDF() ">Descargar</button>
+              <!--
+              <button type="button" class="btn btn-sm btn-outline-secondary">PDF</button>
+             -->
+            </div>
+            <div class="dropdown">
+            <button type="button" class="btn btn-sm btn-outline-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false"  (click)="desplegarOpOrden()">
+             Ordenar
+            </button>
+            <ul class="dropdown-menu" id="contenedro_OpOrden">
+              <li><button class="dropdown-item" (click)="ordenarPorVariedad()"id="ordenVariedad" >Por numero de variedad</button></li>
+              <li><button class="dropdown-item" (click)="ordenarPorPosicion()"id="ordenPosicion">Por posicion en el campo</button></li>
+            </ul>
+          </div>
+          </div>
+        </div>
+  <div id="htmlData" #pdf="">
+    <div id="encabezado" class="collapse">
+      <div class="px-4  text-center hidden">
+       
+        
+        <div class="col-lg-15 mx-auto">
+          <h1 class=" fw-bold">{{objExperimentoSeleccionado.nombre}}</h1>
+          <div class="row mb-6 text-center">
+            <div class="col-3 themed-grid-col text-start" ><b>No. Variedades:</b> {{(numeroVariedades(objExperimentoSeleccionado))}}</div>
+            <div class="col-3 themed-grid-col text-start"><b>Fecha de Evaluacion</b> {{pipe.transform(objHojaSeleccionada.fechaCreacion,'dd/MM/YYYY')}}</div>
+            <div class="col-6 themed-grid-col text-start"><b>Fecha de plantación </b>{{pipe.transform(objExperimentoSeleccionado.inicio,'dd/MM/YYYY')}}</div>
+          </div>  
+          <div class="row mb-6 text-center">
+            <div class="col-3 themed-grid-col text-start"><b>Variedad Testigo </b>{{recuperarNombreTestigo(objExperimentoSeleccionado.variedadTestigo)}}</div>
+            <div class="col-3 themed-grid-col text-start"><b>Edad del cultivo </b>{{objHojaSeleccionada.mesCrecimiento}} mes(s)</div>
+            <div class="col-6 themed-grid-col text-start"><b>Responsable </b>{{usuario.nombre+" "+usuario.apellidoP+" "+usuario.apellidoM}}</div>
+          </div>  
+        </div>
+      </div>
+    </div>
+        <canvas class="my-4 w-100" id="grafica" #grafica="" width="900" height="380" baseChart
+        [data]="this?.barCharDatos"
+        [legend]="false"
+        [options]="barChartOptions"
+        [plugins]="barChartPlugins"
+        [type]="barChartType"
+         >
+        </canvas>
+        <h2>Variedades</h2>
+      <div class="table-responsive">
+        <table class="table table-striped table-sm" >
+          <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Tratamiento</th>
+              <th scope="col">Fase</th>
+              <th scope="col">Campo</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr  *ngFor="let variedad of ListaVariedad let i=index" [ngStyle]="{'background-color':variedad.color}">
+              <td >{{i+1}}</td>
+              <td>{{variedad.tratamiento}}</td>
+              <td>{{variedad.fase}}</td>
+              <td>{{variedad.campo}}</td>
+
+            </tr>
+
+          </tbody>
+        </table>
+      </div>
+      </div>
+    </main>
+  </div>
+</div>
+       
