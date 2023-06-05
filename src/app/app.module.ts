@@ -19,6 +19,7 @@ import { SpinnerComponent } from './shared/spinner/spinner.component';
 import { ColorPickerModule } from 'ngx-color-picker';
 import { Chart } from 'chart.js';
 import { NgChartsModule } from 'ng2-charts';
+import { CanComponentDeactivateComponent } from './can-component-deactivate/can-component-deactivate.component';
 
 @NgModule({
   declarations: [
@@ -27,7 +28,8 @@ import { NgChartsModule } from 'ng2-charts';
     DashboardComponent,
     CorreoNOVerificadoComponent,
     RecuperarPasswordComponent,
-    SpinnerComponent
+    SpinnerComponent,
+    CanComponentDeactivateComponent
   ],
   imports: [
     BrowserModule,
